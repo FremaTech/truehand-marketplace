@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-08-24T21:30:51.532Z",
+  "updatedAt": "2026-08-24T21:53:32.817Z",
   "apps": [
     {
       "id": "aos-dev",
@@ -198,6 +198,38 @@
         "editor",
         "scrittura",
         "office"
+      ]
+    },
+    {
+      "id": "ceresio",
+      "type": "theme",
+      "name": "Lago Ceresio",
+      "version": "1.0.0",
+      "author": "FremaTech",
+      "category": "themes",
+      "description": "Tema chiaro azzurro lago: arioso, calmo, testo scuro ad alto contrasto.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-json",
+      "theme_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/themes/ceresio.json",
+      "tags": [
+        "theme",
+        "light"
+      ]
+    },
+    {
+      "id": "granito-ticino",
+      "type": "theme",
+      "name": "Granito Ticino",
+      "version": "1.0.0",
+      "author": "FremaTech",
+      "category": "themes",
+      "description": "Grigio granito con accento rosso svizzero: sobrio, istituzionale, deciso.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-json",
+      "theme_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/themes/granito-ticino.json",
+      "tags": [
+        "theme",
+        "dark"
       ]
     }
   ]

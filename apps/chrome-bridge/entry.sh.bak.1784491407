@@ -1,0 +1,167 @@
+#!/usr/bin/env bash
+# chrome-bridge AOS-App — wrappa la CLI chrome-bridge per gli agenti nativi.
+# Pilota il Chrome REALE dell'utente (estensione esterna), separato dal browser
+# headless interno di Agentic OS. Output JSON.
+#   POST /api/apps/chrome-bridge/run {"args":["status"]}
+#   POST /api/apps/chrome-bridge/run {"args":["navigate","https://example.com"]}
+#   POST /api/apps/chrome-bridge/run {"args":["screenshot"]}
+#   POST /api/apps/chrome-bridge/run {"args":["inspect"]}
+#   POST /api/apps/chrome-bridge/run {"args":["buttons"]}
+#   POST /api/apps/chrome-bridge/run {"args":["tab_open","https://example.com"]}
+#   POST /api/apps/chrome-bridge/run {"args":["tab_close","42"]}
+#   POST /api/apps/chrome-bridge/run {"args":["tab_activate","42"]}
+#   POST /api/apps/chrome-bridge/run {"args":["scroll","down"]}
+#   POST /api/apps/chrome-bridge/run {"args":["select","country","Switzerland"]}
+#   POST /api/apps/chrome-bridge/run {"args":["click_xy","350","280"]}
+#   POST /api/apps/chrome-bridge/run {"args":["agent_tab"]}
+set -uo pipefail
+
+CB_HOME="${CHROME_BRIDGE_HOME:-/home/frede/chrome-bridge}"
+CLI="$CB_HOME/bin/chrome-bridge.js"
+export CHROME_BRIDGE_URL="${CHROME_BRIDGE_URL:-http://localhost:47800}"
+ARTDIR="${AOS_ARTIFACTS_DIR:-/home/frede/agentic-os/public/artifacts}"
+
+NODE="$(command -v node || true)"
+if [ -z "$NODE" ]; then
+  for n in "$HOME"/.nvm/versions/node/*/bin/node; do [ -x "$n" ] && NODE="$n" && break; done
+fi
+if [ -z "$NODE" ] || [ ! -f "$CLI" ]; then
+  echo '{"ok":false,"error":"chrome-bridge non installato o node assente (CB_HOME='$CB_HOME')"}'; exit 1
+fi
+
+cmd="${1:-status}"; shift 2>/dev/null || true
+
+# Helper: run CLI with --json and optional --tab
+run_cli() {
+  local tab_flag=""
+  if [ -n "${AOS_CB_TAB_ID:-}" ]; then
+    tab_flag="--tab $AOS_CB_TAB_ID"
+  fi
+  eval "\"$NODE\" \"$CLI\" $* $tab_flag --json"
+}
+
+case "$cmd" in
+  status)   "$NODE" "$CLI" status --json ;;
+  tabs)     "$NODE" "$CLI" tabs --json ;;
+  navigate) "$NODE" "$CLI" navigate "${1:-}" --json ;;
+  extract)  "$NODE" "$CLI" extract --json ;;
+  click)    "$NODE" "$CLI" click "${1:-}" --json ;;
+  type)     "$NODE" "$CLI" type "${1:-}" "${2:-}" --json ;;
+  key)      "$NODE" "$CLI" key "${1:-Enter}" --json ;;
+  inspect)
+    # Inspect: list input fields on the current page
+    # Uses CLI raw op dispatch: sends op=inspect to the server
+    "$NODE" "$CLI" inspect --json 2>/dev/null || \
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d '{"op":"inspect"}'
+    ;;
+  buttons)
+    # Buttons: list clickable buttons on the current page
+    "$NODE" "$CLI" buttons --json 2>/dev/null || \
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d '{"op":"buttons"}'
+    ;;
+  tab_open)
+    "$NODE" "$CLI" open "${1:-about:blank}" --json
+    ;;
+  tab_close)
+    # arg = tabId
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d "{\"op\":\"tab_close\",\"tabId\":${1:-0}}"
+    ;;
+  tab_activate)
+    # arg = tabId — focus a specific tab by ID
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d "{\"op\":\"tab_activate\",\"tabId\":${1:-0}}"
+    ;;
+  agent_tab)
+    # Create or get the dedicated agent tab (Chrome Bridge group)
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d '{"op":"agent_tab"}'
+    ;;
+  click_xy)
+    # Click at exact coordinates (x, y) via CDP — for precision clicks
+    # args: x y
+    x="${1:-0}"
+    y="${2:-0}"
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d "{\"op\":\"click_xy\",\"x\":$x,\"y\":$y}"
+    ;;
+  scroll)
+    # scroll up/down/left/right by pixel amount via injected script
+    direction="${1:-down}"
+    amount="${2:-800}"
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d "{\"op\":\"scroll\",\"direction\":\"$direction\",\"amount\":$amount}"
+    ;;
+  select)
+    # select an option in a <select> dropdown
+    # args: selector (CSS or name/id), value
+    selector="${1:-}"
+    value="${2:-}"
+    curl -s -X POST "$CHROME_BRIDGE_URL/command" \
+      -H 'content-type: application/json' \
+      -d "{\"op\":\"select\",\"selector\":\"$selector\",\"value\":\"$value\"}"
+    ;;
+  wait_for)
+    # Wait for text or selector to appear (polls up to timeout seconds)
+    target="${1:-}"
+    timeout="${2:-15}"
+    # We implement this client-side: poll extract until text appears
+    elapsed=0
+    while [ "$elapsed" -lt "$timeout" ]; do
+      result="$("$NODE" "$CLI" extract --json 2>/dev/null)"
+      if echo "$result" | grep -qi "$target"; then
+        echo '{"ok":true,"found":true,"text":"'"$target"'","waited_s":'"$elapsed"'}'
+        exit 0
+      fi
+      sleep 2
+      elapsed=$((elapsed + 2))
+    done
+    echo '{"ok":false,"error":"timeout: text not found within '"$timeout"'s","target":"'"$target"'"}'
+    ;;
+  screenshot)
+    mkdir -p "$ARTDIR"
+    fname="cb-shot-$(date +%s).png"
+    out="$ARTDIR/$fname"
+    res="$("$NODE" "$CLI" screenshot "$out" --json 2>&1)"
+    if echo "$res" | grep -q '"ok": true' 2>/dev/null || [ -f "$out" ]; then
+      url="/artifacts/$fname"
+      printf '{"ok":true,"path":"%s","image_url":"%s","show_in_chat":"![screenshot](%s)","hint":"Incolla il valore di show_in_chat nella tua risposta per mostrare lo screenshot all\\u0027utente."}\n' "$out" "$url" "$url"
+    else
+      echo "$res"
+    fi
+    ;;
+  help|-h|--help)
+    cat <<'USAGE'
+{"app":"chrome-bridge","usage":{
+  "status":"L'estensione Chrome e' connessa?",
+  "tabs":"Elenca le tab aperte nel Chrome reale.",
+  "navigate <url>":"Vai all'URL nella tab agente ed estrai testo+link.",
+  "extract":"Ri-estrai la pagina corrente.",
+  "click <selettore-o-testo>":"Click reale (CSS o testo visibile).",
+  "click_xy <x> <y>":"Click per coordinate pixel (precisione assoluta).",
+  "type <campo> <testo>":"Scrivi in un campo.",
+  "key <Enter|ArrowDown|Escape|Tab>":"Premi un tasto.",
+  "inspect":"Elenca i campi input/textarea della pagina.",
+  "buttons":"Elenca i bottoni clickabili della pagina.",
+  "tab_open <url>":"Apri una nuova tab.",
+  "tab_close <tabId>":"Chiudi una tab per ID.",
+  "tab_activate <tabId>":"Attiva (focus) una tab per ID.",
+  "agent_tab":"Crea/ottiene la tab agente dedicata (Chrome Bridge group).",
+  "scroll <up|down|left|right> [px]":"Scrolla la pagina (default 800px).",
+  "select <selettore> <valore>":"Seleziona opzione in un <select>.",
+  "wait_for <testo> [timeout]":"Attende che un testo compaia nella pagina.",
+  "screenshot":"Cattura la pagina; ritorna show_in_chat = markdown immagine."
+}}
+USAGE
+    ;;
+  *) echo '{"ok":false,"error":"comando sconosciuto: '"$cmd"'"}'; exit 1 ;;
+esac

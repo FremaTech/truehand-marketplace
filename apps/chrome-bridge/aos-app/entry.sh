@@ -1,0 +1,1 @@
+/home/frede/.agentic-os/apps/chrome-bridge/entry.sh

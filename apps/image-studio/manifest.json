@@ -1,0 +1,37 @@
+{
+  "id": "image-studio",
+  "name": "Image Studio",
+  "description": "Generatore di immagini AI multi-provider con galleria. Supporta OpenAI gpt-image-1 (mini/low/medium/high), DALL-E 3, Gemini Imagen, Replicate FLUX, Stability SD3, Pexels/Unsplash stock.",
+  "version": "0.1.0",
+  "author": "Frede",
+  "category": "media",
+  "icon": "Sparkles",
+  "color": "#E85D75",
+  "skill": "skill.md",
+  "ui": {
+    "enabled": true,
+    "path": "/image-studio",
+    "label": "Image Studio"
+  },
+  "cli": {
+    "name": "agentic-image",
+    "entry": "/home/frede/agentic-os/bin/agentic-image"
+  },
+  "permissions": [
+    "network",
+    "vault:read",
+    "filesystem:gallery"
+  ],
+  "tags": [
+    "image-generation",
+    "ai",
+    "creative",
+    "media"
+  ],
+  "bundled": true,
+  "system": true,
+  "help": {
+    "file": "skill.md",
+    "inline": "Generatore di immagini AI multi-provider con galleria. Supporta OpenAI gpt-image-1 (mini/low/medium/high), DALL-E 3, Gemini Imagen, Replicate FLUX, Stability SD3, Pexels/Unsplash stock."
+  }
+}

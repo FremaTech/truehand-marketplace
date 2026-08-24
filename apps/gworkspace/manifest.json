@@ -1,0 +1,87 @@
+{
+  "id": "gworkspace",
+  "name": "Google Workspace",
+  "version": "1.0.0",
+  "author": "frede",
+  "createdAt": "2026-05-30T00:00:00.000Z",
+  "category": "productivity",
+  "description": "Gmail, Calendar, Tasks e Drive del tuo account Google via gog. Sola lettura tranne tasks-add/tasks-done su Google Tasks (dal 24.08). UI multi-finestra + CLI esposta agli agenti.",
+  "runtime": "shell",
+  "entry": "entry.sh",
+  "icon": "Mail",
+  "color": "#E85D75",
+  "tags": [
+    "google",
+    "gmail",
+    "calendar",
+    "tasks",
+    "drive"
+  ],
+  "ui": {
+    "enabled": true,
+    "route": "/ggmail",
+    "icon": "Mail"
+  },
+  "skill": {
+    "enabled": true,
+    "file": "skill.md",
+    "exposeAs": "gworkspace"
+  },
+  "schedule": {
+    "enabled": false
+  },
+  "events": {
+    "emits": [
+      "app.gworkspace.mail.received",
+      "app.gworkspace.calendar.upcoming",
+      "app.gworkspace.auth.expired"
+    ]
+  },
+  "permissions": [
+    "network",
+    "shell"
+  ],
+  "requires": {
+    "binaries": [
+      "gog"
+    ]
+  },
+  "bin": [
+    {
+      "command": "gw",
+      "path": "entry.sh",
+      "description": "Google Workspace CLI: lettura su gmail|calendar|calendars|tasks|tasks-lists|drive, SCRITTURA solo su Google Tasks (tasks-add|tasks-done). Il calendario e' sola lettura, inchiodato.",
+      "agentTool": true,
+      "timeoutMs": 30000,
+      "argsSchema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "gmail",
+              "calendar",
+              "calendars",
+              "tasks",
+              "tasks-lists",
+              "tasks-add",
+              "tasks-done",
+              "drive",
+              "help"
+            ]
+          },
+          "query": {
+            "type": "string",
+            "description": "Gmail/Drive: query di ricerca. Tasks: id lista. tasks-add/tasks-done: id lista, poi gli altri argomenti."
+          }
+        },
+        "required": [
+          "command"
+        ]
+      }
+    }
+  ],
+  "help": {
+    "file": "HELP.md"
+  }
+}

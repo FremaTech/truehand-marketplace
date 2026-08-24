@@ -1,0 +1,18 @@
+{
+  "id": "video-shorts",
+  "name": "Video Shorts (Stoic Meridian style)",
+  "description": "Pipeline completa: script breve → voiceover → 5 immagini cinematic → montaggio FFmpeg → MP4 pronto per Instagram/TikTok",
+  "inputs": {
+    "topic": { "type": "string", "required": true, "label": "Argomento", "placeholder": "Marco Aurelio sulla mortalità" },
+    "duration": { "type": "number", "default": 45, "label": "Durata (sec)" },
+    "tone": { "type": "string", "default": "stoic-meridian", "label": "Tono" }
+  },
+  "nodes": [
+    { "id": "n1", "type": "script", "label": "Genera script", "params": { "model": "haiku", "prompt_template": "Scrivi uno script per uno short di {{duration}} secondi su: {{topic}}. Tono: {{tone}}. Massimo {{duration}} parole." } },
+    { "id": "n2", "type": "voiceover", "label": "Voiceover italiano", "params": { "engine": "piper", "voice": "it_IT-riccardo-x_low" }, "inputs": { "text": "$n1.text" } },
+    { "id": "n3", "type": "image-batch", "label": "5 immagini cinematic", "params": { "count": 5, "aspect": "9:16", "style": "cinematic, dark academia, golden hour" }, "inputs": { "prompts_from_text": "$n1.text" } },
+    { "id": "n4", "type": "subtitle", "label": "Sottotitoli SRT", "inputs": { "audio": "$n2.audio" } },
+    { "id": "n5", "type": "video-merge", "label": "Montaggio finale", "params": { "ken_burns": true, "subtitle_style": "karaoke" }, "inputs": { "audio": "$n2.audio", "images": "$n3.images", "subtitle": "$n4.srt" } }
+  ],
+  "output": { "mp4": "$n5.path" }
+}

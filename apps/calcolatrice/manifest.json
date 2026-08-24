@@ -1,0 +1,28 @@
+{
+  "id": "calcolatrice",
+  "name": "Calcolatrice",
+  "version": "1.0.0",
+  "author": "AOS Developer",
+  "createdAt": "2026-06-22T00:00:00.000Z",
+  "category": "productivity",
+  "description": "Calcolatrice web commutabile tra modalità semplice e scientifica. Funzioni trigonometriche (DEG/RAD), logaritmi, potenze, radici, fattoriale, costanti π/e, parentesi. Supporto tastiera completo. Tema scuro AOS con accenti blu.",
+  "runtime": "node",
+  "entry": "entry.js",
+  "icon": "Calculator",
+  "color": "#3b82f6",
+  "tags": [
+    "calcolatrice",
+    "matematica",
+    "scientifica",
+    "utility"
+  ],
+  "ui": {
+    "enabled": true,
+    "route": "/api/apps/calcolatrice/ui/index.html",
+    "icon": "Calculator"
+  },
+  "permissions": [],
+  "help": {
+    "inline": "Calcolatrice semplice e scientifica. Toggle modalità in alto. Supporta tastiera (Enter=uguale, Esc=cancella)."
+  }
+}

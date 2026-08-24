@@ -1,0 +1,60 @@
+{
+  "id": "project-manager",
+  "name": "Project Manager",
+  "version": "0.16.0",
+  "author": "Frede + Claude",
+  "description": "Blueprint-driven project orchestrator sopra Kanban. Decompone obiettivi in fasi, materializza card Kanban, valuta gate criteria, traccia avanzamento.",
+  "runtime": "node",
+  "entry": "src/app/project-manager/page.tsx",
+  "category": "work",
+  "system": true,
+  "bundled": true,
+  "ui": {
+    "enabled": true,
+    "route": "/project-manager",
+    "icon": "Briefcase",
+    "color": "#3498DB"
+  },
+  "bin": [
+    {
+      "name": "agentic-blueprint",
+      "command": "agentic-blueprint",
+      "path": "~/.local/bin/agentic-blueprint",
+      "description": "CLI per gestione blueprint YAML (list/show/validate/reload)",
+      "agentTool": true
+    }
+  ],
+  "services": [],
+  "widgets": [
+    {
+      "id": "project-manager-mini",
+      "name": "Projects",
+      "component": "ProjectManagerWidget",
+      "size": "compact",
+      "defaultPosition": {
+        "x": 600,
+        "y": 60,
+        "w": 280,
+        "h": 220
+      }
+    }
+  ],
+  "permissions": {
+    "data.local": {
+      "risk": "low",
+      "reason": "Storage progetti in ~/.agentic-os/projects.db"
+    },
+    "data.read.kanban": {
+      "risk": "low",
+      "reason": "Lettura stato card Kanban per gate evaluation"
+    },
+    "data.write.kanban": {
+      "risk": "medium",
+      "reason": "Creazione card Kanban durante materializzazione fasi"
+    }
+  },
+  "help": {
+    "file": "HELP.md",
+    "inline": "ProjectManager orchestra progetti complessi tramite blueprint YAML. Ogni progetto ha fasi con deliverable e gate criteria. Quando una fase si attiva, vengono materializzate le card Kanban necessarie e assegnati gli agenti dichiarati. Agli agenti sono esposti 5 tool per orchestrazione autonoma. Blueprint disponibili: website-vetrina, ecommerce-base, automazione-workflow, aos-app-development."
+  }
+}

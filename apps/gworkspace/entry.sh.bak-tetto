@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# gworkspace AOS-App — CLI wrapper around `gog` for Gmail / Calendar / Tasks / Drive.
+# Read-only. Output is always JSON. Invoked by agents via:
+#   POST /api/apps/gworkspace/run  {"args":["<command>","<arg>"]}
+set -uo pipefail
+
+GOG="${GOG_PATH:-/home/frede/.local/bin/gog}"
+ACC="${GOG_ACCOUNT:-frederico.mafli@gmail.com}"
+
+cmd="${1:-help}"
+shift 2>/dev/null || true
+
+case "$cmd" in
+  gmail)
+    q="${1:-in:inbox}"
+    "$GOG" -a "$ACC" gmail search "$q" --max 25 -j
+    ;;
+  calendar)
+    "$GOG" -a "$ACC" calendar events list --results-only -j
+    ;;
+  tasks-lists)
+    "$GOG" -a "$ACC" tasks lists -j
+    ;;
+  tasks)
+    if [ "${1:-}" != "" ]; then
+      "$GOG" -a "$ACC" tasks list "$1" -j
+    else
+      "$GOG" -a "$ACC" tasks lists -j
+    fi
+    ;;
+  drive)
+    if [ "${1:-}" != "" ]; then
+      "$GOG" -a "$ACC" drive search "$1" -j
+    else
+      "$GOG" -a "$ACC" drive ls -j
+    fi
+    ;;
+  help|-h|--help)
+    cat <<'USAGE'
+{"app":"gworkspace","usage":{
+  "gmail [query]":"Cerca email (default in:inbox)",
+  "calendar":"Prossimi eventi del calendario",
+  "tasks-lists":"Elenco delle liste di Google Tasks",
+  "tasks [listId]":"Task di una lista (o tutte le liste se omesso)",
+  "drive [query]":"File in Drive (root) o ricerca full-text"
+},"note":"Sola lettura. Output JSON."}
+USAGE
+    ;;
+  *)
+    echo "{\"error\":\"unknown command: $cmd\",\"hint\":\"usa: gmail|calendar|tasks|tasks-lists|drive\"}"
+    exit 1
+    ;;
+esac

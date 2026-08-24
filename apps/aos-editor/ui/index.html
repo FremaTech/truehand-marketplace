@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AOS Editor</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Toolbar -->
+  <header id="toolbar">
+    <div class="toolbar-left">
+      <span class="logo">⌘ AOS Editor</span>
+      <button id="btn-save" title="Salva (Ctrl+S)">💾 Salva</button>
+      <button id="btn-new" title="Nuovo file">📄 Nuovo</button>
+      <button id="btn-refresh" title="Aggiorna file tree">🔄 Refresh</button>
+      <button id="btn-opendir" title="Cambia directory di lavoro">📂 Apri dir</button>
+    </div>
+    <div class="toolbar-right">
+      <span id="connection-status" class="status-dot disconnected" title="Stato connessione"></span>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <main id="main-container">
+    <!-- File Tree sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <span>ESPLORA</span>
+        <button id="btn-collapse-all" title="Comprimi tutto">⊟</button>
+      </div>
+      <div id="file-tree" class="file-tree-content"></div>
+    </aside>
+
+    <!-- Editor + Terminal area -->
+    <section id="editor-area">
+      <!-- Tab bar -->
+      <div id="tab-bar">
+        <div id="tabs-container"></div>
+        <button id="btn-new-tab" title="Nuova scheda">+</button>
+      </div>
+      <!-- Monaco editor container -->
+      <div id="editor-container"></div>
+      <!-- Resizable terminal panel -->
+      <div id="terminal-panel">
+        <div id="terminal-header">
+          <span>TERMINALE</span>
+          <div class="terminal-controls">
+            <button id="btn-term-toggle" title="Mostra/Nascondi terminale">▾</button>
+            <button id="btn-term-clear" title="Pulisci terminale">✕</button>
+          </div>
+        </div>
+        <div id="terminal-output"></div>
+        <div id="terminal-input-row">
+          <span class="prompt">$</span>
+          <input id="terminal-input" type="text" placeholder="Esegui comando..." autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+    </section>
+
+    <!-- Chat Agent panel -->
+    <aside id="chat-panel">
+      <div class="chat-header">
+        <span>🤖 AGENTE</span>
+        <select id="agent-select">
+          <option value="">Caricamento...</option>
+        </select>
+      </div>
+      <div id="chat-messages"></div>
+      <div id="chat-input-row">
+        <textarea id="chat-input" placeholder="Chiedi all'agente..." rows="2"></textarea>
+        <button id="btn-chat-send" title="Invia">➤</button>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Status bar -->
+  <footer id="status-bar">
+    <span id="status-text">Pronto</span>
+    <span id="status-file"></span>
+    <span id="status-cursor">Ln 1, Col 1</span>
+    <span id="status-workdir"></span>
+  </footer>
+
+  <!-- Monaco loader -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52/min/vs/loader.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

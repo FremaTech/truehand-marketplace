@@ -1,0 +1,101 @@
+{
+  "id": "chrome-bridge",
+  "name": "Chrome Reale (Bridge)",
+  "version": "1.3.0",
+  "author": "chrome-bridge",
+  "category": "web",
+  "description": "Pilota il browser CHROME REALE dell'utente (sessioni e login suoi) tramite l'estensione esterna chrome-bridge. DIVERSO dal browser headless interno di Agentic OS (tool 'browser' / app 'browser-tool', che e' Playwright senza i login dell'utente). Usalo quando serve una sessione gia' loggata o per evitare anti-bot. Sa fare screenshot da mostrare in chat. [NB: per gli agenti usa il tool nativo 'chrome' (bridge in-AOS, estensione connessa); questa app punta al server standalone :47800.]",
+  "runtime": "shell",
+  "entry": "entry.sh",
+  "icon": "Globe",
+  "color": "#22d3ee",
+  "tags": [
+    "browser",
+    "chrome",
+    "real",
+    "extension",
+    "screenshot",
+    "cli"
+  ],
+  "ui": {
+    "enabled": false
+  },
+  "skill": {
+    "enabled": true,
+    "file": "skill.md",
+    "exposeAs": "chrome_bridge"
+  },
+  "schedule": {
+    "enabled": false
+  },
+  "events": {
+    "consumes": []
+  },
+  "system": false,
+  "bundled": false,
+  "capabilities": [
+    "network"
+  ],
+  "permissions": [
+    "browser"
+  ],
+  "requires": {
+    "binaries": [
+      "node",
+      "curl"
+    ]
+  },
+  "bin": [
+    {
+      "command": "ctl",
+      "path": "entry.sh",
+      "description": "Pilota il Chrome REALE dell'utente (profilo loggato) via l'estensione chrome-bridge. Sottocomandi: 'status' (estensione connessa?), 'tabs' (elenca tab), 'navigate <url>' (vai a URL), 'extract' (ri-estrai pagina), 'click <selettore-o-testo>' (clicca elemento), 'click_xy <x> <y>' (click per coordinate CDP), 'type <campo> <testo>' (digita), 'key <tasto>' (Invio, frecce, Esc, Tab), 'screenshot' (cattura visibile), 'wait_for <selettore-o-testo> [timeout]' (attende che appaia), 'inspect' (elenca campi input), 'buttons' (elenca bottoni clickabili), 'select <selettore> <valore>' (scegli opzione in <select>), 'scroll <direzione> [px]' (scroll: up/down/left/right), 'tab_new <url>' (apri nuova tab), 'tab_close <tabId>' (chiudi tab), 'tab_activate <tabId>' (focus su tab), 'agent_tab' (crea/ottieni tab agente dedicata). NB: NON \u00e8 il browser headless interno (tool 'browser'); qui usi le sessioni gi\u00e0 loggate dell'utente. Non digitare mai password.",
+      "agentTool": true,
+      "argsSchema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "status",
+              "tabs",
+              "navigate",
+              "extract",
+              "click",
+              "click_xy",
+              "type",
+              "key",
+              "screenshot",
+              "wait_for",
+              "inspect",
+              "buttons",
+              "select",
+              "scroll",
+              "tab_new",
+              "tab_close",
+              "tab_activate",
+              "agent_tab"
+            ],
+            "description": "Azione da eseguire"
+          },
+          "arg": {
+            "type": "string",
+            "description": "1\u00b0 argomento: url (navigate/tab_new), selettore/testo (click/type/wait_for/select), direzione (scroll: up/down/left/right), x coordinata (click_xy), tabId (tab_close/tab_activate), tasto (key)"
+          },
+          "arg2": {
+            "type": "string",
+            "description": "2\u00b0 argomento: testo da scrivere (per type), valore opzione (per select), pixel (per scroll), y coordinata (per click_xy)"
+          }
+        },
+        "required": [
+          "command"
+        ]
+      },
+      "timeoutMs": 90000
+    }
+  ],
+  "help": {
+    "file": "skill.md",
+    "inline": "Chrome Reale: pilota il browser loggato dell'utente via estensione chrome-bridge. Comandi: status, tabs, navigate, extract, click, click_xy, type, key, screenshot, wait_for, inspect, buttons, select, scroll, tab_new, tab_close, tab_activate, agent_tab. Separato dal browser headless interno. Fa screenshot mostrabili in chat."
+  }
+}

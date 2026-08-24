@@ -1,0 +1,204 @@
+{
+  "version": "1.0",
+  "updatedAt": "2026-08-24T21:30:51.532Z",
+  "apps": [
+    {
+      "id": "aos-dev",
+      "name": "AOS Developer",
+      "version": "0.1.0",
+      "author": "FremaTech",
+      "category": "agents",
+      "description": "Agente full-stack che fa evolvere Agentic OS dall'interno. Usa qwen3-coder cloud (configurabile) con accesso completo a shell, read_file, write_file, aos_api e tutti i tool di sviluppo. Repo: /home/fr",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/aos-dev.tar.gz",
+      "tags": [
+        "development",
+        "agent",
+        "self-evolution",
+        "cloud-llm",
+        "qwen3-coder"
+      ]
+    },
+    {
+      "id": "aos-editor",
+      "name": "AOS Editor",
+      "version": "2.0.0",
+      "author": "FremaTech",
+      "category": "productivity",
+      "description": "Editor di codice integrato in Agentic OS con Monaco Editor, terminale sandbox, chat agente nativo. Tema scuro/oro AOS.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/aos-editor.tar.gz",
+      "tags": [
+        "editor",
+        "monaco",
+        "codice",
+        "terminale",
+        "agenti"
+      ]
+    },
+    {
+      "id": "browser-tool",
+      "name": "Browser Tool",
+      "version": "0.1.0",
+      "author": "FremaTech",
+      "category": "sys-agents",
+      "description": "Headless multi-profile browser controllable by agents",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/browser-tool.tar.gz",
+      "tags": []
+    },
+    {
+      "id": "calcolatrice",
+      "name": "Calcolatrice",
+      "version": "1.0.0",
+      "author": "FremaTech",
+      "category": "productivity",
+      "description": "Calcolatrice web commutabile tra modalità semplice e scientifica. Funzioni trigonometriche (DEG/RAD), logaritmi, potenze, radici, fattoriale, costanti π/e, parentesi. Supporto tastiera completo. Tema ",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/calcolatrice.tar.gz",
+      "tags": [
+        "calcolatrice",
+        "matematica",
+        "scientifica",
+        "utility"
+      ]
+    },
+    {
+      "id": "chrome-bridge",
+      "name": "Chrome Reale (Bridge)",
+      "version": "1.3.0",
+      "author": "FremaTech",
+      "category": "web",
+      "description": "Pilota il browser CHROME REALE dell'utente (sessioni e login suoi) tramite l'estensione esterna chrome-bridge. DIVERSO dal browser headless interno di Agentic OS (tool 'browser' / app 'browser-tool', ",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/chrome-bridge.tar.gz",
+      "tags": [
+        "browser",
+        "chrome",
+        "real",
+        "extension",
+        "screenshot",
+        "cli"
+      ]
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "version": "git",
+      "author": "FremaTech",
+      "category": "sys-os",
+      "description": "Git version control",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/git.tar.gz",
+      "tags": []
+    },
+    {
+      "id": "gworkspace",
+      "name": "Google Workspace",
+      "version": "1.0.0",
+      "author": "FremaTech",
+      "category": "productivity",
+      "description": "Gmail, Calendar, Tasks e Drive del tuo account Google via gog. Sola lettura tranne tasks-add/tasks-done su Google Tasks (dal 24.08). UI multi-finestra + CLI esposta agli agenti.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/gworkspace.tar.gz",
+      "tags": [
+        "google",
+        "gmail",
+        "calendar",
+        "tasks",
+        "drive"
+      ]
+    },
+    {
+      "id": "image-studio",
+      "name": "Image Studio",
+      "version": "0.1.0",
+      "author": "FremaTech",
+      "category": "media",
+      "description": "Generatore di immagini AI multi-provider con galleria. Supporta OpenAI gpt-image-1 (mini/low/medium/high), DALL-E 3, Gemini Imagen, Replicate FLUX, Stability SD3, Pexels/Unsplash stock.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/image-studio.tar.gz",
+      "tags": [
+        "image-generation",
+        "ai",
+        "creative",
+        "media"
+      ]
+    },
+    {
+      "id": "powershell-bridge",
+      "name": "PowerShell Bridge",
+      "version": "1.0.0",
+      "author": "FremaTech",
+      "category": "sys-os",
+      "description": "Esegue comandi PowerShell sul lato Windows dal contesto WSL2. Permette agli agenti di interagire con il sistema Windows (file, processi, registry, servizi, app) senza dover conoscere i path /mnt/c. Su",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/powershell-bridge.tar.gz",
+      "tags": [
+        "powershell",
+        "windows",
+        "wsl",
+        "bridge",
+        "system",
+        "admin"
+      ]
+    },
+    {
+      "id": "project-manager",
+      "name": "Project Manager",
+      "version": "0.16.0",
+      "author": "FremaTech",
+      "category": "work",
+      "description": "Blueprint-driven project orchestrator sopra Kanban. Decompone obiettivi in fasi, materializza card Kanban, valuta gate criteria, traccia avanzamento.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/project-manager.tar.gz",
+      "tags": []
+    },
+    {
+      "id": "workflow-builder",
+      "name": "Workflow Builder",
+      "version": "0.1.0",
+      "author": "FremaTech",
+      "category": "work",
+      "description": "Crea ed esegue flussi multi-step: script → voiceover → immagini → editing video. Editor visuale a nodi.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/workflow-builder.tar.gz",
+      "tags": [
+        "video",
+        "automation",
+        "content",
+        "flow",
+        "editor"
+      ]
+    },
+    {
+      "id": "writer",
+      "name": "Scrittore",
+      "version": "1.0.0",
+      "author": "FremaTech",
+      "category": "productivity",
+      "description": "Word processor stile MS Word: editor ricco (grassetto, stili, tabelle, immagini), foglio A4, multi-documento, autosave ed export HTML. UI desktop + CLI esposta agli agenti per creare/leggere/aggiornar",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/writer.tar.gz",
+      "tags": [
+        "word",
+        "documenti",
+        "editor",
+        "scrittura",
+        "office"
+      ]
+    }
+  ]
+}

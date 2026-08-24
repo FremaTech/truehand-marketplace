@@ -1,0 +1,26 @@
+{
+  "id": "git",
+  "name": "Git",
+  "version": "git",
+  "author": "wrapped",
+  "createdAt": "2026-05-27T09:30:19.324Z",
+  "category": "sys-os",
+  "description": "Git version control",
+  "runtime": "shell",
+  "entry": "entry.sh",
+  "ui": {
+    "enabled": false
+  },
+  "skill": {
+    "enabled": true,
+    "file": "skill.md",
+    "exposeAs": "git"
+  },
+  "schedule": {
+    "enabled": false
+  },
+  "help": {
+    "file": "skill.md",
+    "inline": "Git version control"
+  }
+}

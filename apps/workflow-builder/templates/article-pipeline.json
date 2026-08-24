@@ -1,0 +1,15 @@
+{
+  "id": "article-pipeline",
+  "name": "Articolo SEO",
+  "description": "Brief → Research → Draft → SEO meta → Pubblicazione WordPress",
+  "inputs": {
+    "topic": { "type": "string", "required": true },
+    "wordCount": { "type": "number", "default": 1200 }
+  },
+  "nodes": [
+    { "id": "r", "type": "shell", "label": "Web research", "params": { "command": "agentic-app run web-research --topic '{{topic}}'" } },
+    { "id": "d", "type": "script", "label": "Draft articolo", "params": { "model": "sonnet", "prompt_template": "Scrivi un articolo SEO di ~{{wordCount}} parole su {{topic}}, basato su questi findings: {{$r.stdout}}" } },
+    { "id": "seo", "type": "script", "label": "Meta SEO", "params": { "model": "haiku", "prompt_template": "Genera title (<60ch), meta description (<155ch), 5 tag per: {{$d.text}}" } }
+  ],
+  "output": { "article": "$d.text", "seo": "$seo.text" }
+}

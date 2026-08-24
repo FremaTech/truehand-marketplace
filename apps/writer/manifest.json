@@ -1,0 +1,52 @@
+{
+  "id": "writer",
+  "name": "Scrittore",
+  "version": "1.0.0",
+  "author": "frede",
+  "createdAt": "2026-06-06T00:00:00.000Z",
+  "category": "productivity",
+  "description": "Word processor stile MS Word: editor ricco (grassetto, stili, tabelle, immagini), foglio A4, multi-documento, autosave ed export HTML. UI desktop + CLI esposta agli agenti per creare/leggere/aggiornare documenti.",
+  "runtime": "node",
+  "entry": "entry.js",
+  "icon": "FileText",
+  "color": "#2B579A",
+  "tags": ["word", "documenti", "editor", "scrittura", "office"],
+  "ui": {
+    "enabled": true,
+    "route": "/writer",
+    "icon": "FileText"
+  },
+  "skill": {
+    "enabled": true,
+    "file": "skill.md",
+    "exposeAs": "writer"
+  },
+  "help": {
+    "file": "skill.md",
+    "inline": "Scrittore è il word processor di AOS. Agenti: usa la CLI (list|read|create|append) via POST /api/apps/writer/run per creare e modificare documenti che l'utente vede in /writer."
+  },
+  "schedule": { "enabled": false },
+  "bundled": true,
+  "system": false,
+  "permissions": ["filesystem", "memory"],
+  "requires": { "binaries": ["node"] },
+  "bin": [
+    {
+      "command": "writer",
+      "path": "entry.js",
+      "description": "Scrittore CLI: list | read <id> | create <title> | append <id> <text> | --help",
+      "agentTool": true,
+      "timeoutMs": 20000,
+      "argsSchema": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string", "enum": ["list", "read", "create", "append", "help"] },
+          "id": { "type": "string", "description": "id documento (read/append)" },
+          "text": { "type": "string", "description": "titolo (create) o testo/HTML da accodare (append)" }
+        },
+        "required": ["command"]
+      }
+    }
+  ],
+  "capabilities": ["storage", "compute"]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "aos-dev",
+  "name": "AOS Developer",
+  "description": "Agente full-stack che fa evolvere Agentic OS dall'interno. Usa qwen3-coder cloud (configurabile) con accesso completo a shell, read_file, write_file, aos_api e tutti i tool di sviluppo. Repo: /home/frede/agentic-os.",
+  "version": "0.1.0",
+  "author": "Frede",
+  "category": "agents",
+  "icon": "Hammer",
+  "color": "#D4AF72",
+  "skill": "skill.md",
+  "ui": {
+    "enabled": true,
+    "path": "/aos-dev",
+    "label": "AOS Developer"
+  },
+  "permissions": [
+    "filesystem:repo",
+    "shell:full",
+    "git:read-write",
+    "network",
+    "systemd:user-services"
+  ],
+  "tags": [
+    "development",
+    "agent",
+    "self-evolution",
+    "cloud-llm",
+    "qwen3-coder"
+  ],
+  "config": {
+    "profileId": "aos-developer",
+    "models": [
+      "qwen3-coder:480b-cloud",
+      "deepseek-v4-pro:cloud",
+      "kimi-k2.6:cloud",
+      "glm-5.1:cloud"
+    ],
+    "workdir": "/home/frede/agentic-os",
+    "repo": "TUO_UTENTE/TUO_REPO"
+  },
+  "bundled": true,
+  "system": true,
+  "help": {
+    "file": "skill.md",
+    "inline": "Agente full-stack che fa evolvere Agentic OS dall'interno. Usa qwen3-coder cloud (configurabile) con accesso completo a shell, read_file, write_file, aos_api e tutti i tool di sviluppo. Repo: /home/frede/agentic-os."
+  }
+}

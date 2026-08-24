@@ -1,0 +1,37 @@
+{
+  "id": "workflow-builder",
+  "name": "Workflow Builder",
+  "version": "0.1.0",
+  "description": "Crea ed esegue flussi multi-step: script → voiceover → immagini → editing video. Editor visuale a nodi.",
+  "author": "Signor Frede",
+  "category": "work",
+  "runtime": "node",
+  "entry": "entry.sh",
+  "ui": {
+    "enabled": true,
+    "route": "/workflow-builder",
+    "icon": "route",
+    "label": "Workflow Builder",
+    "color": "purple"
+  },
+  "skill": "skill.md",
+  "permissions": [
+    "network",
+    "filesystem:write",
+    "subprocess"
+  ],
+  "tags": [
+    "video",
+    "automation",
+    "content",
+    "flow",
+    "editor"
+  ],
+  "createdAt": "2026-05-27T12:00:00.000Z",
+  "bundled": true,
+  "system": true,
+  "help": {
+    "file": "skill.md",
+    "inline": "Crea ed esegue flussi multi-step: script → voiceover → immagini → editing video. Editor visuale a nodi."
+  }
+}

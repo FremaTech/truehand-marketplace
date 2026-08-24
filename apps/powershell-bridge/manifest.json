@@ -1,0 +1,91 @@
+{
+  "id": "powershell-bridge",
+  "name": "PowerShell Bridge",
+  "version": "1.0.0",
+  "author": "aos-dev",
+  "category": "sys-os",
+  "description": "Esegue comandi PowerShell sul lato Windows dal contesto WSL2. Permette agli agenti di interagire con il sistema Windows (file, processi, registry, servizi, app) senza dover conoscere i path /mnt/c. Supporta PowerShell 7 (pwsh.exe) e PS 5.1 (powershell.exe) come fallback. Include safety: comandi distruttivi bloccati di default, timeout, output truncation.",
+  "runtime": "shell",
+  "entry": "entry.sh",
+  "icon": "Terminal",
+  "color": "#012456",
+  "tags": [
+    "powershell",
+    "windows",
+    "wsl",
+    "bridge",
+    "system",
+    "admin"
+  ],
+  "ui": {
+    "enabled": false
+  },
+  "skill": {
+    "enabled": true,
+    "file": "skill.md",
+    "exposeAs": "powershell_bridge"
+  },
+  "schedule": {
+    "enabled": false
+  },
+  "events": {
+    "consumes": []
+  },
+  "system": false,
+  "bundled": false,
+  "capabilities": [
+    "shell",
+    "network"
+  ],
+  "permissions": [
+    "shell",
+    "filesystem:home"
+  ],
+  "requires": {
+    "binaries": [
+      "pwsh.exe"
+    ]
+  },
+  "bin": [
+    {
+      "command": "ctl",
+      "path": "entry.sh",
+      "description": "Esegue comandi PowerShell sul lato Windows. Sottocomandi: 'exec <command>' (esegue un comando PS singolo), 'script <path>' (esegue un file .ps1), 'info' (stato connessione, versione PS, hostname Windows), 'list-modules' (moduli PS disponibili). Comandi distruttivi (Remove-Item, Stop-Process, Format-Volume, ecc.) sono bloccati di default; usa '--force' per sbloccare con conferma. Il bridge usa pwsh.exe (PS7) di default, --ps5 per usare powershell.exe.",
+      "agentTool": true,
+      "argsSchema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": ["exec", "script", "info", "list-modules"],
+            "description": "Sottocomando"
+          },
+          "arg": {
+            "type": "string",
+            "description": "Argomento: comando PS (per exec), path .ps1 (per script)"
+          },
+          "ps5": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "description": "Usa PowerShell 5.1 invece di 7 (default false)"
+          },
+          "force": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "description": "Sblocca comandi distruttivi (default false)"
+          },
+          "timeout": {
+            "type": "string",
+            "description": "Timeout in secondi (default 30, max 120)"
+          }
+        },
+        "required": ["command"]
+      },
+      "timeoutMs": 120000
+    }
+  ],
+  "help": {
+    "file": "skill.md",
+    "inline": "PowerShell Bridge: esegue comandi PowerShell sul lato Windows da WSL2. Usa pwsh.exe (PS7) di default. Sottocomandi: exec, script, info, list-modules. Safety: comandi distruttivi bloccati senza --force."
+  }
+}

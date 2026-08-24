@@ -1,0 +1,34 @@
+{
+  "id": "aos-editor",
+  "name": "AOS Editor",
+  "version": "2.0.0",
+  "author": "frede",
+  "createdAt": "2026-06-11T00:00:00.000Z",
+  "category": "productivity",
+  "description": "Editor di codice integrato in Agentic OS con Monaco Editor, terminale sandbox, chat agente nativo. Tema scuro/oro AOS.",
+  "runtime": "node",
+  "entry": "entry.js",
+  "icon": "Code2",
+  "color": "#d4a853",
+  "tags": [
+    "editor",
+    "monaco",
+    "codice",
+    "terminale",
+    "agenti"
+  ],
+  "ui": {
+    "enabled": true,
+    "route": "/api/apps/aos-editor/ui/index.html",
+    "icon": "Code2"
+  },
+  "skill": {
+    "enabled": true,
+    "file": "skill.md",
+    "exposeAs": "editor"
+  },
+  "permissions": [
+    "filesystem",
+    "shell"
+  ]
+}

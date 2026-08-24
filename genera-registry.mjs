@@ -42,5 +42,27 @@ if (fs.existsSync("themes")) {
   }
 }
 
+// Iconpack: cartella di SVG + iconpack.json.
+if (fs.existsSync("iconpacks")) {
+  for (const d of fs.readdirSync("iconpacks")) {
+    const man = `iconpacks/${d}/iconpack.json`;
+    if (!fs.existsSync(man)) continue;
+    const p = JSON.parse(fs.readFileSync(man, "utf8"));
+    reg.apps.push({
+      id: p.id,
+      type: "iconpack",
+      name: p.name,
+      version: p.version || "1.0.0",
+      author: p.author || "FremaTech",
+      category: "themes",
+      description: (p.description || "").slice(0, 200),
+      source: "https://github.com/FremaTech/truehand-marketplace",
+      install_method: "download-tgz",
+      tgz_url: `https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/${p.id}.tar.gz`,
+      tags: ["icons", "iconpack"],
+    });
+  }
+}
+
 fs.writeFileSync("registry.json", JSON.stringify(reg, null, 2) + "\n");
 console.log("registry:", reg.apps.length, "voci (app + temi)");

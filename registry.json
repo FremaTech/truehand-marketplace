@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-08-24T22:12:29.092Z",
+  "updatedAt": "2026-08-24T22:41:29.611Z",
   "apps": [
     {
       "id": "aos-dev",
@@ -244,6 +244,22 @@
       "tags": [
         "theme",
         "dark"
+      ]
+    },
+    {
+      "id": "stitch-icons",
+      "type": "iconpack",
+      "name": "Stitch Icons",
+      "version": "1.0.0",
+      "author": "FremaTech",
+      "category": "themes",
+      "description": "Il set di icone del tema Stitch: squircle chiari, glifi indaco peso 200, punto oro. 28 icone per le app di serie.",
+      "source": "https://github.com/FremaTech/truehand-marketplace",
+      "install_method": "download-tgz",
+      "tgz_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/dist/stitch-icons.tar.gz",
+      "tags": [
+        "icons",
+        "iconpack"
       ]
     }
   ]

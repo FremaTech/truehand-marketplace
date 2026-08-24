@@ -36,6 +36,7 @@ if (fs.existsSync("themes")) {
       source: "https://github.com/FremaTech/truehand-marketplace",
       install_method: "download-json",
       theme_url: `https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/themes/${f}`,
+      preview: { accent: t.accent, accent2: t.accent2, bg: t.bg, cream: t.cream, light: !!t.light },
       tags: ["theme", t.light ? "light" : "dark"],
     });
   }

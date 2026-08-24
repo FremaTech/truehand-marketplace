@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-08-24T21:53:32.817Z",
+  "updatedAt": "2026-08-24T22:12:29.092Z",
   "apps": [
     {
       "id": "aos-dev",
@@ -211,6 +211,13 @@
       "source": "https://github.com/FremaTech/truehand-marketplace",
       "install_method": "download-json",
       "theme_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/themes/ceresio.json",
+      "preview": {
+        "accent": "#1273A6",
+        "accent2": "#5B8DA6",
+        "bg": "linear-gradient(160deg, #eaf3f7 0%, #dcebf2 55%, #cfe1ea 100%)",
+        "cream": "#1E2A31",
+        "light": true
+      },
       "tags": [
         "theme",
         "light"
@@ -227,6 +234,13 @@
       "source": "https://github.com/FremaTech/truehand-marketplace",
       "install_method": "download-json",
       "theme_url": "https://raw.githubusercontent.com/FremaTech/truehand-marketplace/main/themes/granito-ticino.json",
+      "preview": {
+        "accent": "#D52B1E",
+        "accent2": "#8A94A6",
+        "bg": "linear-gradient(160deg, #2b2d31 0%, #202226 55%, #161719 100%)",
+        "cream": "#ECEDEF",
+        "light": false
+      },
       "tags": [
         "theme",
         "dark"

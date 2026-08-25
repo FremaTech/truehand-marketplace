@@ -4,11 +4,16 @@ import fs from "node:fs";
 const apps = fs.readdirSync("apps");
 const reg = { version: "1.0", updatedAt: new Date().toISOString(), apps: [] };
 
+// Integrazioni = connettori verso sistemi esterni (browser vero, shell
+// Windows, Google, git...): nel Discover vivono in una sezione propria.
+const INTEGRAZIONI = new Set(["gworkspace", "chrome-bridge", "powershell-bridge", "browser-tool", "git"]);
+
 for (const id of apps) {
   let m = {};
   try { m = JSON.parse(fs.readFileSync(`apps/${id}/manifest.json`, "utf8")); } catch {}
   reg.apps.push({
     id,
+    type: INTEGRAZIONI.has(id) ? "integration" : "app",
     name: m.name || id,
     version: m.version || "1.0.0",
     author: "FremaTech",

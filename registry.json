@@ -1,9 +1,10 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-08-24T22:41:29.611Z",
+  "updatedAt": "2026-08-25T10:51:15.945Z",
   "apps": [
     {
       "id": "aos-dev",
+      "type": "app",
       "name": "AOS Developer",
       "version": "0.1.0",
       "author": "FremaTech",
@@ -22,6 +23,7 @@
     },
     {
       "id": "aos-editor",
+      "type": "app",
       "name": "AOS Editor",
       "version": "2.0.0",
       "author": "FremaTech",
@@ -40,6 +42,7 @@
     },
     {
       "id": "browser-tool",
+      "type": "integration",
       "name": "Browser Tool",
       "version": "0.1.0",
       "author": "FremaTech",
@@ -52,6 +55,7 @@
     },
     {
       "id": "calcolatrice",
+      "type": "app",
       "name": "Calcolatrice",
       "version": "1.0.0",
       "author": "FremaTech",
@@ -69,6 +73,7 @@
     },
     {
       "id": "chrome-bridge",
+      "type": "integration",
       "name": "Chrome Reale (Bridge)",
       "version": "1.3.0",
       "author": "FremaTech",
@@ -88,6 +93,7 @@
     },
     {
       "id": "git",
+      "type": "integration",
       "name": "Git",
       "version": "git",
       "author": "FremaTech",
@@ -100,6 +106,7 @@
     },
     {
       "id": "gworkspace",
+      "type": "integration",
       "name": "Google Workspace",
       "version": "1.0.0",
       "author": "FremaTech",
@@ -118,6 +125,7 @@
     },
     {
       "id": "image-studio",
+      "type": "app",
       "name": "Image Studio",
       "version": "0.1.0",
       "author": "FremaTech",
@@ -135,6 +143,7 @@
     },
     {
       "id": "powershell-bridge",
+      "type": "integration",
       "name": "PowerShell Bridge",
       "version": "1.0.0",
       "author": "FremaTech",
@@ -154,6 +163,7 @@
     },
     {
       "id": "project-manager",
+      "type": "app",
       "name": "Project Manager",
       "version": "0.16.0",
       "author": "FremaTech",
@@ -166,6 +176,7 @@
     },
     {
       "id": "workflow-builder",
+      "type": "app",
       "name": "Workflow Builder",
       "version": "0.1.0",
       "author": "FremaTech",
@@ -184,6 +195,7 @@
     },
     {
       "id": "writer",
+      "type": "app",
       "name": "Scrittore",
       "version": "1.0.0",
       "author": "FremaTech",
